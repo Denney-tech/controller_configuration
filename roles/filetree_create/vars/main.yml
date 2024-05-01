@@ -4,6 +4,7 @@ valid_tags:
   - all
   - settings
   - credentials
+  - credential_input_sources
   - credential_types
   - execution_environments
   - groups

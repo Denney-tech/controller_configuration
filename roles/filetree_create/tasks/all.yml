@@ -29,7 +29,7 @@
         msg: "The organization {{ organization_filter }} has the ID {{ organization_id }}"
 
 - name: Include tasks (block)
-  when: "['all', 'labels', 'applications', 'instance_groups', 'settings', 'inventory', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'roles', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes', 'schedules'] | intersect(input_tag) | length > 0"
+  when: "['all', 'labels', 'applications', 'instance_groups', 'settings', 'inventory', 'credentials', 'credential_input_sources', 'credential_types', 'notification_templates', 'users', 'teams', 'roles', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes', 'schedules'] | intersect(input_tag) | length > 0"
   block:
     - name: "Export Inventories and related Groups and Hosts"
       ansible.builtin.include_tasks: "inventory.yml"
@@ -40,6 +40,9 @@
     - name: "Export Credentials"
       ansible.builtin.include_tasks: "credentials.yml"
       when: "'credentials' in input_tag or 'all' in input_tag"
+    - name: "Export Credential Input Sources"
+      ansible.builtin.include_tasks: "credential_input_sources.yml"
+      when: "'credential_input_sources' in input_tag or 'all' in input_tag"
     - name: "Export Credential Types"
       ansible.builtin.include_tasks: "credential_types.yml"
       when: "'credential_types' in input_tag or 'all' in input_tag"
